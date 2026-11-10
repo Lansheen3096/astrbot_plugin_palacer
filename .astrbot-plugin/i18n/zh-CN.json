@@ -1,0 +1,8 @@
+{
+  "views": {
+    "voice-card": {
+      "title": "声音卡",
+      "description": "手动填写或基于 persona 生成声音卡"
+    }
+  }
+}

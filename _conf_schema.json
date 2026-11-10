@@ -1,0 +1,232 @@
+{
+  "_section_canary": {
+    "description": "=== Palacer ===",
+    "type": "text",
+    "invisible": true
+  },
+  "enabled": {
+    "description": "启用插件",
+    "type": "bool",
+    "default": true
+  },
+  "mode": {
+    "description": "shadow=只记录不发送；canary=接管并发送",
+    "type": "string",
+    "default": "canary",
+    "options": [
+      "shadow",
+      "canary"
+    ]
+  },
+  "platforms": {
+    "description": "只接管的平台，逗号分隔；留空=只按 umo allowlist",
+    "type": "string",
+    "default": "webchat,default"
+  },
+  "persona_id_webchat": {
+    "description": "WebUI persona；留空时使用通用 persona",
+    "type": "string",
+    "default": "",
+    "_special": "select_persona"
+  },
+  "umo_allowlist": {
+    "description": "允许接管的会话 UMO，多个用逗号分隔；留空不接管任何会话",
+    "type": "string",
+    "default": "",
+    "_special": "umo"
+  },
+  "persona_id": {
+    "description": "palacer 使用的 persona",
+    "type": "string",
+    "default": "",
+    "_special": "select_persona"
+  },
+  "startup_delay": {
+    "description": "已废弃：消息聚合由 burst 负责，保持 0 即可",
+    "type": "float",
+    "default": 0.0,
+    "slider": {
+      "min": 0,
+      "max": 30,
+      "step": 1
+    }
+  },
+  "message_window": {
+    "description": "每条消息自己的发送窗口秒数",
+    "type": "float",
+    "default": 5.0,
+    "slider": {
+      "min": 0,
+      "max": 20,
+      "step": 1
+    }
+  },
+  "max_concurrent_generations": {
+    "description": "同时最多跑几个生成线程（1 可避免插话累积旧线程成本）",
+    "type": "int",
+    "default": 1,
+    "slider": {
+      "min": 1,
+      "max": 4,
+      "step": 1
+    }
+  },
+  "memory_shortlist": {
+    "description": "使用已配置知识库的 embedding 短名单；关闭则使用全池粗筛与可选 rerank",
+    "type": "bool",
+    "default": false
+  },
+  "model": {
+    "description": "写手/母进程用的模型名；看图固定走 deepseek-flash。改完需重启 AstrBot",
+    "type": "string",
+    "default": "deepseek-flash"
+  },
+  "planner_model": {
+    "description": "planner（工具判断 + 母进程规划）用的模型名。只管规划和分工，不写正文；默认 flash，改完需重启 AstrBot",
+    "type": "string",
+    "default": "deepseek-flash"
+  },
+  "planner_effort": {
+    "description": "planner 推理强度",
+    "type": "string",
+    "default": "high",
+    "options": [
+      "low",
+      "medium",
+      "high"
+    ]
+  },
+  "api_base": {
+    "description": "DeepSeek 兼容接口 API base；必须配置或设置 PALACER_API_BASE",
+    "type": "string",
+    "default": ""
+  },
+  "api_key": {
+    "description": "DeepSeek 兼容接口 API key；必须配置或设置 PALACER_API_KEY",
+    "type": "string",
+    "default": "",
+    "secret": true
+  },
+  "trace": {
+    "description": "记录详细本地诊断（可能包含消息与 persona）；默认关闭",
+    "type": "bool",
+    "default": false
+  },
+  "omni_provider_id": {
+    "description": "音乐与视频理解提供商 ID（普通语音条仍走本地转写）",
+    "type": "string",
+    "default": "",
+    "_special": "select_provider"
+  },
+  "omni_audio_max_seconds": {
+    "description": "每个音乐附件最多分析的秒数；超出时明确标注只分析前段",
+    "type": "int",
+    "default": 600,
+    "slider": {
+      "min": 30,
+      "max": 600,
+      "step": 30
+    }
+  },
+  "omni_video_max_seconds": {
+    "description": "每次视频视听窗口最多分析的秒数；陪看仍按当前播放窗口",
+    "type": "int",
+    "default": 90,
+    "slider": {
+      "min": 10,
+      "max": 180,
+      "step": 10
+    }
+  },
+  "memory_kb_name": {
+    "type": "string",
+    "description": "可选事实知识库名称；不配则仅使用 memory_recall 插件配置中明确指定的知识库",
+    "default": ""
+  },
+  "rerank_url": {
+    "type": "string",
+    "description": "可选 rerank 完整 URL；留空不调用 rerank 服务",
+    "default": ""
+  },
+  "default_book_id": {
+    "type": "string",
+    "description": "可选阅读集成的默认书籍 ID；不配则无默认书籍",
+    "default": ""
+  },
+  "integrations": {
+    "type": "object",
+    "description": "可选集成；默认全部禁用，不自动发现私人数据",
+    "items": {
+      "state_plugin": {
+        "type": "string",
+        "description": "可选 state 集成的 AstrBot 注册名；须实现 README 中约定的接口",
+        "default": ""
+      },
+      "review_plugin": {
+        "type": "string",
+        "description": "可选 review 集成的 AstrBot 注册名；须实现 README 中约定的接口",
+        "default": ""
+      },
+      "health_plugin": {
+        "type": "string",
+        "description": "可选 health 集成的 AstrBot 注册名；须实现 README 中约定的接口",
+        "default": ""
+      },
+      "life_plugin": {
+        "type": "string",
+        "description": "可选 life 集成的 AstrBot 注册名；须实现 README 中约定的接口",
+        "default": ""
+      },
+      "mode_plugin": {
+        "type": "string",
+        "description": "可选 mode 集成的 AstrBot 注册名；须实现 README 中约定的接口",
+        "default": ""
+      },
+      "media_plugin": {
+        "type": "string",
+        "description": "可选 media 集成的 AstrBot 注册名；须实现 README 中约定的接口",
+        "default": ""
+      },
+      "voice_plugin": {
+        "type": "string",
+        "description": "可选 voice 集成的 AstrBot 注册名；须实现 README 中约定的接口",
+        "default": ""
+      },
+      "notes_plugin": {
+        "type": "string",
+        "description": "可选 notes 集成的 AstrBot 注册名；须实现 README 中约定的接口",
+        "default": ""
+      },
+      "review_log": {
+        "type": "string",
+        "description": "可选 review_log 数据路径，相对 AstrBot data 目录；留空禁用",
+        "default": ""
+      },
+      "health_cache": {
+        "type": "string",
+        "description": "可选 health_cache 数据路径，相对 AstrBot data 目录；留空禁用",
+        "default": ""
+      },
+      "health_state": {
+        "type": "string",
+        "description": "可选 health_state 数据路径，相对 AstrBot data 目录；留空禁用",
+        "default": ""
+      },
+      "life_state": {
+        "type": "string",
+        "description": "可选 life_state 数据路径，相对 AstrBot data 目录；留空禁用",
+        "default": ""
+      },
+      "life_events": {
+        "type": "string",
+        "description": "可选 life_events 数据路径，相对 AstrBot data 目录；留空禁用",
+        "default": ""
+      },
+      "media_data": {
+        "type": "string",
+        "description": "可选 media_data 数据路径，相对 AstrBot data 目录；留空禁用",
+        "default": ""
+      }
+    }
+  }
+}

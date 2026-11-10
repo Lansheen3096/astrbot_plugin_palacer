@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Palacer · 声音卡</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main>
+    <header><p class="eyebrow">PALACER / PERSONA STUDIO</p><h1>让每一句，都有自己的声音。</h1><p class="intro">为 persona 写一张声音卡，或让模型提炼一份草稿，再按你的习惯调整。</p></header>
+    <section class="panel" aria-labelledby="editor-title">
+      <div class="panel-heading"><h2 id="editor-title">声音卡</h2><span id="routing" class="badge">正在连接</span></div>
+      <div class="fields">
+        <label>Persona<select id="persona" disabled><option value="">正在加载…</option></select></label>
+        <label>生成声音卡的模型<select id="provider" disabled><option value="">正在加载…</option></select></label>
+      </div>
+      <p id="configured" class="hint"></p>
+      <div class="editor-heading"><label for="card">表达方式</label><span id="count">0 / 12000</span></div>
+      <textarea id="card" maxlength="12000" spellcheck="false" disabled placeholder="可以写称呼、口吻、句长、标点、常用措辞与禁忌，也可以先点击下方按钮生成。"></textarea>
+      <p class="hint">生成结果先作为草稿，点击保存后生效。保存为空会恢复该 persona 的 AstrBot 默认回复流程。</p>
+      <div class="actions"><button id="generate" class="secondary" disabled>根据 persona 生成草稿</button><button id="save" disabled>保存声音卡</button><button id="reload" class="text" disabled>重新读取</button></div>
+      <p id="status" role="status" aria-live="polite">正在连接 AstrBot…</p>
+    </section>
+    <footer>声音卡按 persona 分别保存。没有有效声音卡时，Palacer 自动交回默认 LLM 流程。</footer>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

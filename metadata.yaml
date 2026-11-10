@@ -1,0 +1,15 @@
+name: astrbot_plugin_palacer
+display_name: Palacer
+short_desc: 母进程规划、独立写手、分段投递与用户插话取消
+desc: |
+  在指定 WebUI/QQ 私聊会话中规划并分段回复，支持媒体观察与实际发送时间记录。
+  必须先配置 API、persona、声音卡和会话白名单；无声音卡时使用默认 LLM 流程。QQ 聚合与队列协作需先安装 astrbot_plugin_burst >=0.3.0；其他集成可选，见 README。
+author: Lansheen3096
+version: 0.1.12
+astrbot_version: ">=4.29.1"
+repo: https://github.com/Lansheen3096/astrbot_plugin_palacer
+tags:
+  - 消息处理
+  - palacer
+views:
+  - voice-card
